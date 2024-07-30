@@ -1,0 +1,30 @@
+---
+- name: Configure Ethernet Interfaces for prhqifw
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  vars:
+    template_name: "tmpl-prhqifw"
+    interfaces:
+      - { if_name: "ethernet1/1", ip: "$prhq-iperi-fwif", vr_name: "vr-global", zone_name: "isz-prhqifw-iperi", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_extif }
+      - { if_name: "ethernet1/2", ip: "$prhqifw-if_iusrs", vr_name: "vr-global", zone_name: "isz-prhq-iusr", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_intif }
+      - { if_name: "ethernet1/3", ip: "$prhqifw-if_isrv-dc", vr_name: "vr-global", zone_name: "isz-prhq-dc", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_intif }
+      - { if_name: "ethernet1/4", ip: "$prhqifw-if_isrv-uidprox", vr_name: "vr-global", zone_name: "isz-prhq-uidprox", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_intif }
+      - { if_name: "ethernet1/5", ip: "$prhqifw-if_isrv-logsto", vr_name: "vr-global", zone_name: "isz-prhq-logsto", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_intif }
+      - { if_name: "ethernet1/6", ip: "$prhqifw-if_isrv-web", vr_name: "vr-global", zone_name: "isz-prhq-web", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_intif }
+      - { if_name: "ethernet1/7", ip: "$prhqifw-if_isrv-mng", vr_name: "vr-global", zone_name: "isz-prhq-mgmt", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_intif }
+
+  tasks:
+    - name: Create Ethernet Interfaces in tmpl-prhqifw
+      paloaltonetworks.panos.panos_interface:
+        provider: "{{ provider }}"
+        template: "{{ template_name }}"
+        if_name: "{{ item.if_name }}"
+        mode: "{{ item.mode }}"
+        enable_dhcp: "{{ item.enable_dhcp }}"
+        ip: "{{ item.ip }}"
+        vr_name: "{{ item.vr_name }}"
+        zone_name: "{{ item.zone_name }}"
+        management_profile: "{{ item.management_profile }}"
+      loop: "{{ interfaces }}"

@@ -1,0 +1,53 @@
+---
+- name: Create Device Groups on Palo Alto Panorama
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Create dg-global Device Group
+      paloaltonetworks.panos.panos_device_group:
+        provider: "{{ provider }}"
+        name: "dg-global"
+
+    - name: Create dg-prhq Device Group
+      paloaltonetworks.panos.panos_device_group:
+        provider: "{{ provider }}"
+        name: "dg-prhq"
+        parent: "dg-global"
+
+    - name: Create dg-prhq_efw Device Group
+      paloaltonetworks.panos.panos_device_group:
+        provider: "{{ provider }}"
+        name: "dg-prhq_efw"
+        parent: "dg-prhq"
+
+    - name: Create dg-prhq_ifw Device Group
+      paloaltonetworks.panos.panos_device_group:
+        provider: "{{ provider }}"
+        name: "dg-prhq_ifw"
+        parent: "dg-prhq"
+
+    - name: Create dg-zubr Device Group
+      paloaltonetworks.panos.panos_device_group:
+        provider: "{{ provider }}"
+        name: "dg-zubr"
+        parent: "dg-global"
+
+    - name: Create dg-zubr_fw Device Group
+      paloaltonetworks.panos.panos_device_group:
+        provider: "{{ provider }}"
+        name: "dg-zubr_fw"
+        parent: "dg-zubr"
+
+    - name: Create dg-ridsec Device Group
+      paloaltonetworks.panos.panos_device_group:
+        provider: "{{ provider }}"
+        name: "dg-ridsec"
+        parent: "dg-global"
+
+    - name: Create dg-ridsec_fw Device Group
+      paloaltonetworks.panos.panos_device_group:
+        provider: "{{ provider }}"
+        name: "dg-ridsec_fw"
+        parent: "dg-ridsec"

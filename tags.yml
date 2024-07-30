@@ -1,0 +1,107 @@
+---
+- name: Configure Tags on Palo Alto Panorama
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  vars:
+    green_color: "green"
+    salmon_color: "salmon"
+    purple_color: "purple"
+    red_color: "red"
+    lime_color: "lime"
+    orange_color: "red-orange"
+    yellow_color: "yellow"
+
+  tasks:
+    - name: Creating Firewall Interface Tags
+      block:
+        - name: Create prhq-iusr-fwif Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-iusr-fwif"
+            color: "{{ lime_color }}"
+            comments: "Prague HQ Internal Users Interface"
+            device_group: "dg-prhq"
+
+        - name: Create prhq-is-fwif Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-is-fwif"
+            color: "{{ green_color }}"
+            comments: "Prague HQ Internal Servers Interface"
+            device_group: "dg-prhq"
+
+        - name: Create prhq-isdc-fwif Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-isdc-fwif"
+            color: "{{ purple_color }}"
+            comments: "Prague HQ Domain Controller Interface"
+            device_group: "dg-global"
+
+        - name: Create prhq-iperi-fwif Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-iperi-fwif"
+            color: "{{ green_color }}"
+            comments: "Internal Firewall Perimeter Interface"
+            device_group: "dg-global"
+
+        - name: Create prhq-ds-fwif Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-ds-fwif"
+            color: "{{ orange_color }}"
+            comments: "External Firewall DMZ Interface"
+            device_group: "dg-global"
+
+    - name: Creating Network Object Tags
+      block:
+        - name: Create prhq-iusr Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-iusr"
+            color: "{{ lime_color }}"
+            comments: "Prague HQ Internal Users"
+            device_group: "dg-prhq"
+
+        - name: Create prhq-isrv Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-isrv"
+            color: "{{ green_color }}"
+            comments: "Prague HQ Internal Servers"
+            device_group: "dg-global"
+
+        - name: Create prhq-isdc Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-isdc"
+            color: "{{ purple_color }}"
+            comments: "Prague HQ Domain Controller"
+            device_group: "dg-global"
+
+        - name: Create prhq-ds Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-ds"
+            color: "{{ orange_color }}"
+            comments: "Prague Public DMZ Web Servers"
+            device_group: "dg-global"
+
+        - name: Create prhq-ismng Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-ismng"
+            color: "{{ yellow_color }}"
+            comments: "Windows Jump Server"
+            device_group: "dg-global"
+
+        - name: Create prhq-eperi-fwif Tag
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ provider }}"
+            name: "prhq-eperi-fwif"
+            color: "{{ red_color }}"
+            comments: "Ext Perimeter Ext FW Interface"
+            device_group: "dg-global"

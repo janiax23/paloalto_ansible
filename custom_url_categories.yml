@@ -1,0 +1,26 @@
+---
+- name: Configure Custom URL Categories
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Create custom URL category for Ridpharm URLs
+      paloaltonetworks.panos.panos_custom_url_category:
+        provider: "{{ provider }}"
+        name: "url-cat_ridpharm"
+        device_group: dg-global
+        description: "Ridpharm URLs"
+        type: "URL List"
+        url_value:
+          - "*.ridpharm.com/"
+
+    - name: Create custom URL category for Ridsec URLs
+      paloaltonetworks.panos.panos_custom_url_category:
+        provider: "{{ provider }}"
+        name: "url-cat_ridsec"
+        device_group: dg-global
+        description: "Ridsec URLs"
+        type: "URL List"
+        url_value:
+          - "*.ridsec.com/"          

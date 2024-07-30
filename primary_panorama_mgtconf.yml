@@ -1,0 +1,20 @@
+---
+- name: Configure Primary Panorama Device Configuration
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Configure Basic Device Config
+      paloaltonetworks.panos.panos_mgtconfig:
+        provider: "{{ provider }}"
+        dns_server_primary: "9.9.9.9"
+        dns_server_secondary: "8.8.8.8"
+        domain: "ridpharm.com"
+        hostname: "prhq-pana"
+        login_banner: "You are connecting to a Ridpharm critical asset. Your actions are closely monitored. Any unlawful interventions will be reported to the law enforcement."
+        ntp_server_primary: "cz.pool.ntp.org"
+        timezone: "Europe/Prague"
+
+
+

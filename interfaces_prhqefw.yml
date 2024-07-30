@@ -1,0 +1,27 @@
+---
+- name: Configure Ethernet Interfaces for prhqifw
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  vars:
+    template_name: "tmpl-prhqefw"
+    interfaces:
+      - { if_name: "ethernet1/1", ip: "$prhqefw-if_eperi-verizon", vr_name: "vr-global", zone_name: "esz-prhq-eperi-verizon", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_extif }
+      - { if_name: "ethernet1/2", ip: "$prhqefw-if_eperi-comcast", vr_name: "vr-global", zone_name: "esz-prhq-eperi-comcast", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_extif }
+      - { if_name: "ethernet1/3", ip: "$prhqefw-if_iperiefw", vr_name: "vr-global", zone_name: "isz-prhq-iperi", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_intif }
+      - { if_name: "ethernet1/4", ip: "$prhqefw-if_dsrv", vr_name: "vr-global", zone_name: "dsz-prhq-web", mode: "layer3", enable_dhcp: false, management_profile: prof-mgmt_intif }
+
+  tasks:
+    - name: Create Ethernet Interfaces in tmpl-prhqefw
+      paloaltonetworks.panos.panos_interface:
+        provider: "{{ provider }}"
+        template: "{{ template_name }}"
+        if_name: "{{ item.if_name }}"
+        mode: "{{ item.mode }}"
+        enable_dhcp: "{{ item.enable_dhcp }}"
+        ip: "{{ item.ip }}"
+        vr_name: "{{ item.vr_name }}"
+        zone_name: "{{ item.zone_name }}"
+        management_profile: "{{ item.management_profile }}"
+      loop: "{{ interfaces }}"

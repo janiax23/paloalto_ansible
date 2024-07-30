@@ -1,0 +1,70 @@
+---
+- name: Configure Network Objects on Palo Alto Panorama
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+
+    - name: Create gno_prhq-isdc Address Object
+      paloaltonetworks.panos.panos_address_object:
+        provider: "{{ provider }}"
+        name: "gno_prhq-isdc"
+        value: "10.0.3.11/24"
+        description: "DC for the entire org"
+        device_group: "dg-global"
+        tag: ["prhq-isdc"]
+
+    - name: Create gno_prhq-islog Address Object
+      paloaltonetworks.panos.panos_address_object:
+        provider: "{{ provider }}"
+        name: "gno_prhq-islog"
+        value: "10.0.5.14/24"
+        description: "Log management for the entire org"
+        device_group: "dg-global"
+        tag: ["prhq-isdc"]
+
+    - name: Create gno_prhq-isstor Address Object
+      paloaltonetworks.panos.panos_address_object:
+        provider: "{{ provider }}"
+        name: "gno_prhq-isstor"
+        value: "10.0.5.15/24"
+        description: "Storage server for the entire org"
+        device_group: "dg-global"
+        tag: ["prhq-isrv"]        
+
+    - name: Create gno_prhq-isweb Address Object
+      paloaltonetworks.panos.panos_address_object:
+        provider: "{{ provider }}"
+        name: "gno_prhq-isweb"
+        value: "10.0.6.80/24"
+        description: "Internal Ridpharm Web"
+        device_group: "dg-global"
+        tag: ["prhq-isrv"]             
+
+    - name: Create gno_prhq-winjmp Address Object
+      paloaltonetworks.panos.panos_address_object:
+        provider: "{{ provider }}"
+        name: "gno_prhq-winjmp"
+        value: "10.0.7.22/24"
+        description: "Windows Jump Server"
+        device_group: "dg-global"
+        tag: ["prhq-ismng"]   
+
+    - name: Create gno_prhq-dsweba Address Object
+      paloaltonetworks.panos.panos_address_object:
+        provider: "{{ provider }}"
+        name: "gno_prhq-dsweba"
+        value: "10.0.80.80/24"
+        description: "Public Web Server A"
+        device_group: "dg-global"
+        tag: ["prhq-ds"]          
+
+    - name: Create no_prhq-iusr Address Object
+      paloaltonetworks.panos.panos_address_object:
+        provider: "{{ provider }}"
+        name: "no_prhq-iusr"
+        value: "10.0.2.0/24"
+        description: "Internal User Network in Prague HQ"
+        device_group: "dg-prhq"
+        tag: ["prhq-iusr"]

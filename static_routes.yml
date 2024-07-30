@@ -1,0 +1,52 @@
+---
+- name: Configure Tags on Palo Alto Panorama
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+
+  tasks:
+    
+    # Creating Static Routes for prhqifw 
+    
+    - name: Configure Static Routes for prhqifw
+      block:
+        - name: Create Default Route for prhqifw
+          paloaltonetworks.panos.panos_static_route:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            virtual_router: "vr-global"
+            name: "default_route"
+            destination: "$default_route"
+            interface: "ethernet1/1"
+            nexthop_type: "ip-address"
+            nexthop: "$default_route_next_hop"
+
+
+    # Creating Static Routes for prhqefw 
+    
+    - name: Configure Static Routes for prhqefw
+      block:
+        - name: Create Verizon Default Route for prhqefw
+          paloaltonetworks.panos.panos_static_route:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            virtual_router: "vr-global"
+            name: "verizon_default_route"
+            destination: "$default_route"
+            interface: "ethernet1/1"
+            nexthop_type: "ip-address"
+            nexthop: "$verizon_default_route_next_hop"
+            admin_dist: "10"
+
+        - name: Create Comcast Default Route for prhqefw
+          paloaltonetworks.panos.panos_static_route:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            virtual_router: "vr-global"
+            name: "comcast_default_route"
+            destination: "$default_route"
+            interface: "ethernet1/2"
+            nexthop_type: "ip-address"
+            nexthop: "$comcast_default_route_next_hop"
+            admin_dist: "11"

@@ -1,0 +1,92 @@
+---
+- name: Configure Zones on Palo Alto Panorama
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Create esz-prhq-eperi-verizon Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqefw"
+        zone: "esz-prhq-eperi-verizon"
+        mode: "layer3"
+
+    - name: Create esz-prhq-eperi-comcast Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqefw"
+        zone: "esz-prhq-eperi-comcast"
+        mode: "layer3"
+
+    - name: Create dsz-prhq-web Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqefw"
+        zone: "dsz-prhq-web"
+        mode: "layer3"
+
+    - name: Create isz-prhqefw-iperi Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqefw"
+        zone: "isz-prhq-iperi"
+        mode: "layer3"
+
+    - name: Create isz-prhqifw-iperi Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqifw"
+        zone: "isz-prhq-iperi"
+        mode: "layer3"
+
+    - name: Create isz-prhq-iusr Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqifw"
+        zone: "isz-prhq-iusr"
+        mode: "layer3"
+        enable_userid: "true"
+
+    - name: Create isz-prhq-dc Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqifw"
+        zone: "isz-prhq-dc"
+        mode: "layer3"
+
+    - name: Create isz-prhq-uidprox Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqifw"
+        zone: "isz-prhq-uidprox"
+        mode: "layer3"
+
+    - name: Create isz-prhq-logsto Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqifw"
+        zone: "isz-prhq-logsto"
+        mode: "layer3"
+
+    - name: Create isz-prhq-web Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqifw"
+        zone: "isz-prhq-web"
+        mode: "layer3"
+
+    - name: Create isz-prhq-mgmt Zone
+      paloaltonetworks.panos.panos_zone:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqifw"
+        zone: "isz-prhq-mgmt"
+        mode: "layer3"
+        enable_userid: "true"
+
+
+
+
+
+
+

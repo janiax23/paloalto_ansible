@@ -1,0 +1,52 @@
+---
+- name: Configure Templates and Template Stacks on Palo Alto Panorama
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Creating Templates
+      block:
+        - name: Create tmpl-global Template
+          paloaltonetworks.panos.panos_template:
+            provider: "{{ provider }}"
+            name: "tmpl-global"
+            description: "Global Template"
+
+        - name: Create tmpl-prhqfw Template
+          paloaltonetworks.panos.panos_template:
+            provider: "{{ provider }}"
+            name: "tmpl-prhqfw"
+            description: "Template for Prague HQ Firewalls"
+
+        - name: Create tmpl-prhqefw Template
+          paloaltonetworks.panos.panos_template:
+            provider: "{{ provider }}"
+            name: "tmpl-prhqefw"
+            description: "Template for Prague HQ External Firewalls"
+
+        - name: Create tmpl-prhqifw Template
+          paloaltonetworks.panos.panos_template:
+            provider: "{{ provider }}"
+            name: "tmpl-prhqifw"
+            description: "Template for Prague HQ Internal Firewalls"
+
+    - name: Creating Template Stacks
+      block:
+        - name: Create tmplsta-prhqifw Template Stack
+          paloaltonetworks.panos.panos_template_stack:
+            provider: "{{ provider }}"
+            name: "tmplsta-prhqifw"
+            description: "Template Stack for Prague HQ Internal Firewalls"
+            templates: 
+              - "tmpl-prhqifw"
+              - "tmpl-global"
+              
+        - name: Create tmplsta-prhqefw Template Stack
+          paloaltonetworks.panos.panos_template_stack:
+            provider: "{{ provider }}"
+            name: "tmplsta-prhqefw"
+            description: "Template Stack for Prague HQ External Firewalls"
+            templates: 
+              - "tmpl-prhqefw"
+              - "tmpl-global"

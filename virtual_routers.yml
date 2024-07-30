@@ -1,0 +1,18 @@
+---
+- name: Configure Virtual Routers on Palo Alto Panorama
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Create vr-global Virtual Router in tmpl-prhqifw
+      paloaltonetworks.panos.panos_virtual_router:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqifw"
+        name: "vr-global"
+
+    - name: Create vr-global Virtual Router in tmpl-prhqefw
+      paloaltonetworks.panos.panos_virtual_router:
+        provider: "{{ provider }}"
+        template: "tmpl-prhqefw"
+        name: "vr-global"

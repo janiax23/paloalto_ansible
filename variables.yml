@@ -1,0 +1,155 @@
+---
+- name: Configure Template Variables on Palo Alto Panorama
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+    
+    # Creating Variables for prhqifw Interfaces
+    
+    - name: Configure variables for tmpl-prhqifw Template
+      block:
+        - name: Create prhq-iperi-fwif Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$prhq-iperi-fwif"
+            value: "10.0.99.1/28"
+
+        - name: Create prhqifw-if_iusrs Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$prhqifw-if_iusrs"
+            value: "10.0.2.1/24"
+
+        - name: Create prhqifw-if_isrv-dc Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$prhqifw-if_isrv-dc"
+            value: "10.0.3.1/24"
+
+        - name: Create prhqifw-if_isrv-uidprox Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$prhqifw-if_isrv-uidprox"
+            value: "10.0.4.1/24"
+
+        - name: Create prhqifw-if_isrv-logsto Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$prhqifw-if_isrv-logsto"
+            value: "10.0.5.1/24"
+
+        - name: Create prhqifw-if_isrv-web Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$prhqifw-if_isrv-web"
+            value: "10.0.6.1/24"
+
+        - name: Create prhqifw-if_isrv-mng Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$prhqifw-if_isrv-mng"
+            value: "10.0.7.1/24"
+
+
+  # Creating Variables for prhqifw Static Routes
+
+    - name: Configure Variables for prhqifw Static Routes
+      block:
+        - name: Create prhqifw Default Route
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$default_route"
+            value: "0.0.0.0/0"
+
+        - name: Create prhqifw Default Route Next Hop
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqifw"
+            variable_type: "ip-netmask"
+            name: "$default_route_next_hop"
+            value: "10.0.99.2"
+
+
+
+  # Creating Variables for prhqefw Interfaces
+   
+    - name: Configure variables for tmpl-prhqefw Template
+      block:
+        - name: Create prhqefw-if_eperi-verizon Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            variable_type: "ip-netmask"
+            name: "$prhqefw-if_eperi-verizon"
+            value: "13.13.13.1/28"
+
+        - name: Create prhqefw-if_eperi-comcast Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            variable_type: "ip-netmask"
+            name: "$prhqefw-if_eperi-comcast"
+            value: "31.31.31.1/28"
+
+        - name: Create prhqefw-if_iperiefw Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            variable_type: "ip-netmask"
+            name: "$prhqefw-if_iperiefw"
+            value: "10.0.99.2/28"
+
+        - name: Create prhqefw-if_dsrv Variable
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            variable_type: "ip-netmask"
+            name: "$prhqefw-if_dsrv"
+            value: "10.0.80.1/24"
+
+
+  # Creating Variables for prhqefw Static Routes
+
+    - name: Configure Variables for prhqefw Static Routes
+      block:
+        - name: Create prhqefw Default Route
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            variable_type: "ip-netmask"
+            name: "$default_route"
+            value: "0.0.0.0/0"
+
+        - name: Create prhqefw Verizon Default Route Next Hop
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            variable_type: "ip-netmask"
+            name: "$verizon_default_route_next_hop"
+            value: "13.13.13.14"
+
+        - name: Create prhqefw Comcast Default Route Next Hop
+          paloaltonetworks.panos.panos_template_variable:
+            provider: "{{ provider }}"
+            template: "tmpl-prhqefw"
+            variable_type: "ip-netmask"
+            name: "$comcast_default_route_next_hop"
+            value: "31.31.31.14"

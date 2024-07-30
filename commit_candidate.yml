@@ -1,0 +1,14 @@
+- name: Commit Panorama Candidate Configuration
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Commit Panorama Candidate Configuration
+      paloaltonetworks.panos.panos_commit_panorama:
+        provider: "{{ provider }}"
+        description: "Ansible Candidate Configuration Commit"
+      register: result
+
+    - debug:
+        msg: 'The status of the commit is {{ result.details }}'  

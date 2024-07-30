@@ -1,0 +1,32 @@
+---
+- name: Configure Management Profiles
+  hosts: panorama
+  connection: local
+  gather_facts: no
+
+  vars:
+    templates:
+      - "tmpl-prhqefw"
+      - "tmpl-prhqifw"
+
+  tasks:
+   
+    - name: Create External Management Profile
+      paloaltonetworks.panos.panos_management_profile:
+        provider: "{{ provider }}"
+        template: "{{ item }}"
+        name: "prof-mgmt_extif"
+        ping: true
+      loop: "{{ templates }}"
+
+    - name: Create Internal Management Profile
+      paloaltonetworks.panos.panos_management_profile:
+        provider: "{{ provider }}"
+        template: "{{ item }}"
+        name: "prof-mgmt_intif"
+        ping: true
+        snmp: true
+        response_pages: true
+        userid_service: true
+      loop: "{{ templates }}"
+  
